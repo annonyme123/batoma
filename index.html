@@ -2,115 +2,205 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Valentine</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bonne Saint-Valentin ❤️</title>
 
 <style>
-    body {
-        margin: 0;
-        padding: 0;
-        background: #000;
-        color: #fff;
-        font-family: Arial, Helvetica, sans-serif;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        text-align: center;
-        overflow: hidden;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Segoe UI', sans-serif;
+}
 
-    img {
-        max-width: 90%;
-        max-height: 60vh;
-        margin-bottom: 25px;
-        border-radius: 12px;
-    }
+body{
+height:100vh;
+overflow:hidden;
+color:white;
+}
 
-    h1 {
-        margin-bottom: 25px;
-        font-size: 22px;
-    }
+/* arrière-plan romantique */
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:url("https://www.lunion.fr/id232608/article/2021-02-13/tradition-romantique-ou-invention-commerciale-vous-explique-lorigine-de-la-saint") center/cover no-repeat;
+filter:blur(8px) brightness(0.6);
+z-index:-2;
+}
 
-    .buttons {
-        display: flex;
-        gap: 20px;
-    }
+/* feux d'artifice */
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
 
-    button {
-        padding: 15px 35px;
-        font-size: 18px;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
+/* bloc message */
+.container{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:20px;
+}
 
-    #yes {
-        background: #e60073;
-        color: #fff;
-        font-size: 20px;
-    }
+.message{
+background:rgba(0,0,0,0.45);
+backdrop-filter:blur(10px);
+padding:25px;
+border-radius:20px;
+max-width:600px;
+text-align:center;
+font-size:1.1rem;
+line-height:1.6;
+box-shadow:0 0 25px rgba(255,0,80,0.4);
+}
 
-    #no {
-        background: #444;
-        color: #fff;
-    }
+/* animation */
+.message{
+animation:fade 2s ease;
+}
 
-    .hidden {
-        display: none;
-    }
+@keyframes fade{
+from{opacity:0; transform:translateY(30px);}
+to{opacity:1;}
+}
+
+/* image romantique */
+.photo{
+margin-top:15px;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 0 20px rgba(255,0,90,0.6);
+}
+
+.photo img{
+width:100%;
+display:block;
+}
+
+/* liens */
+.links{
+margin-top:15px;
+font-size:0.85rem;
+}
+
+.links a{
+color:#ffb3c6;
+text-decoration:none;
+}
 </style>
 </head>
 
 <body>
 
-<img
-  id="mainMedia"
-  src="https://codekagehq.github.io/Ask-out-your-Valentine/images/image1.gif"
-  alt="Valentine GIF"
-/>
+<canvas id="fireworks"></canvas>
 
-<h1 id="question">
-  Veux-tu être ma Valentine Batoma Diallo ? 💘
-Touche pas à NON
-</h1>
+<div class="container">
+<div class="message">
 
-<div class="buttons" id="buttons">
-    <button id="yes">OUI ❤️</button>
-    <button id="no">NON 💔</button>
+❤️ En ce 14 février, je veux juste te rappeler une chose simple : je t’aime plus que tout 🥰.  
+Depuis ce fameux jour de mai 2022 🌹, mon cœur ne bat plus pareil… il bat pour toi 💓.  
+
+Tu es ma douceur 🌸, ma paix 🤍, mon sourire chaque jour 😊.  
+Avec toi, tout devient plus beau ✨, même les moments les plus simples.  
+
+Merci d’être dans ma vie malgré la distance chaque jour 🙏🏽, merci pour ton amour 💕, ta tendresse 😘 et ta présence.  
+Car sans toi, chaque jour loin de toi est un supplice que j’affronte 😔💔.  
+
+Je veux marcher avec toi toujours 👣, main dans la main 🤝, cœur contre cœur 💖.  
+
+Bonne Saint-Valentin mon bébé 💘.  
+Je t’aime aujourd’hui mon bb Bato, demain et pour toujours 😍🔥.
+
+<div class="photo">
+<img src="https://information.tv5monde.com/terriennes/saint-valentin-quand-les-femmes-declarent-leur-flamme-28444" alt="amour">
+</div>
+
+<div class="links">
+<a href="https://www.lunion.fr/id232608/article/2021-02-13/tradition-romantique-ou-invention-commerciale-vous-explique-lorigine-de-la-saint" target="_blank">Origine Saint-Valentin</a> ❤️ |
+<a href="https://information.tv5monde.com/terriennes/saint-valentin-quand-les-femmes-declarent-leur-flamme-28444" target="_blank">Déclaration d’amour</a>
+</div>
+
+</div>
 </div>
 
 <script>
-    const yesBtn = document.getElementById("yes");
-    const noBtn = document.getElementById("no");
-    const media = document.getElementById("mainMedia");
-    const question = document.getElementById("question");
-    const buttons = document.getElementById("buttons");
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
 
-    let scale = 1;
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
 
-    noBtn.addEventListener("click", () => {
-        scale += 0.4;
-        yesBtn.style.transform = `scale(${scale})`;
+let fireworks = [];
 
-        if (scale >= 4.5) {
-            noBtn.classList.add("hidden");
-            yesBtn.style.width = "100vw";
-            yesBtn.style.height = "100vh";
-            yesBtn.style.fontSize = "42px";
-            yesBtn.innerText = "OUI ❤️😍";
-        }
-    });
+function Firework(){
+this.x = Math.random()*canvas.width;
+this.y = canvas.height;
+this.targetY = Math.random()*canvas.height/2;
+this.speed = 4;
+this.exploded = false;
+this.particles=[];
+}
 
-    yesBtn.addEventListener("click", () => {
-        media.src = "https://acegif.com/wp-content/uploads/2021/4fh5wi/valentinenwen-9.gif";
-        question.innerText = "T'avais pas le choix de toute façon ❤️";
-        buttons.classList.add("hidden");
-    });
+Firework.prototype.update=function(){
+if(!this.exploded){
+this.y -= this.speed;
+if(this.y <= this.targetY){
+this.exploded=true;
+for(let i=0;i<60;i++){
+this.particles.push({
+x:this.x,
+y:this.y,
+vx:(Math.random()-0.5)*6,
+vy:(Math.random()-0.5)*6,
+life:100
+});
+}
+}
+}
+else{
+this.particles.forEach(p=>{
+p.x+=p.vx;
+p.y+=p.vy;
+p.life--;
+});
+}
+};
+
+Firework.prototype.draw=function(){
+if(!this.exploded){
+ctx.fillStyle="white";
+ctx.fillRect(this.x,this.y,3,3);
+}else{
+this.particles.forEach(p=>{
+ctx.fillStyle="pink";
+ctx.fillRect(p.x,p.y,2,2);
+});
+}
+};
+
+function animate(){
+ctx.fillStyle="rgba(0,0,0,0.2)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+
+if(Math.random()<0.03) fireworks.push(new Firework());
+
+fireworks.forEach(f=>{
+f.update();
+f.draw();
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
 </script>
 
 </body>
 </html>
-
