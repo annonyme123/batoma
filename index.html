@@ -10,29 +10,17 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family: 'Segoe UI', sans-serif;
+font-family:'Segoe UI', sans-serif;
 }
 
 body{
 height:100vh;
 overflow:hidden;
+background:radial-gradient(circle at top, #220011, #000);
 color:white;
 }
 
-/* arrière-plan romantique */
-body::before{
-content:"";
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:url("https://www.lunion.fr/id232608/article/2021-02-13/tradition-romantique-ou-invention-commerciale-vous-explique-lorigine-de-la-saint") center/cover no-repeat;
-filter:blur(8px) brightness(0.6);
-z-index:-2;
-}
-
-/* feux d'artifice */
+/* feu d'artifice */
 canvas{
 position:fixed;
 top:0;
@@ -40,7 +28,7 @@ left:0;
 z-index:-1;
 }
 
-/* bloc message */
+/* message centré */
 .container{
 height:100vh;
 display:flex;
@@ -51,48 +39,29 @@ padding:20px;
 
 .message{
 background:rgba(0,0,0,0.45);
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
 padding:25px;
 border-radius:20px;
 max-width:600px;
 text-align:center;
-font-size:1.1rem;
-line-height:1.6;
-box-shadow:0 0 25px rgba(255,0,80,0.4);
-}
-
-/* animation */
-.message{
+font-size:1.15rem;
+line-height:1.7;
+box-shadow:0 0 35px rgba(255,0,90,0.5);
 animation:fade 2s ease;
 }
 
+/* animation douce */
 @keyframes fade{
 from{opacity:0; transform:translateY(30px);}
 to{opacity:1;}
 }
 
-/* image romantique */
-.photo{
-margin-top:15px;
-border-radius:15px;
-overflow:hidden;
-box-shadow:0 0 20px rgba(255,0,90,0.6);
+/* responsive téléphone */
+@media (max-width:600px){
+.message{
+font-size:1rem;
+padding:20px;
 }
-
-.photo img{
-width:100%;
-display:block;
-}
-
-/* liens */
-.links{
-margin-top:15px;
-font-size:0.85rem;
-}
-
-.links a{
-color:#ffb3c6;
-text-decoration:none;
 }
 </style>
 </head>
@@ -117,15 +86,6 @@ Je veux marcher avec toi toujours 👣, main dans la main 🤝, cœur contre cœ
 
 Bonne Saint-Valentin mon bébé 💘.  
 Je t’aime aujourd’hui mon bb Bato, demain et pour toujours 😍🔥.
-
-<div class="photo">
-<img src="https://information.tv5monde.com/terriennes/saint-valentin-quand-les-femmes-declarent-leur-flamme-28444" alt="amour">
-</div>
-
-<div class="links">
-<a href="https://www.lunion.fr/id232608/article/2021-02-13/tradition-romantique-ou-invention-commerciale-vous-explique-lorigine-de-la-saint" target="_blank">Origine Saint-Valentin</a> ❤️ |
-<a href="https://information.tv5monde.com/terriennes/saint-valentin-quand-les-femmes-declarent-leur-flamme-28444" target="_blank">Déclaration d’amour</a>
-</div>
 
 </div>
 </div>
@@ -200,6 +160,11 @@ requestAnimationFrame(animate);
 }
 
 animate();
+
+window.addEventListener("resize",()=>{
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+});
 </script>
 
 </body>
